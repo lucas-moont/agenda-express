@@ -1,5 +1,9 @@
-exports.contactPageBuilder = (req, res) => {
-    res.send(`
-        Page de contato acessada com sucesso   
-    `)
-}
+exports.index = (req, res) => {
+  if (res.locals.user) {
+    res.render("contact", {
+      titulo: 'Página de contatos'
+    });
+  }else{
+    res.redirect('/login')
+  }
+};
