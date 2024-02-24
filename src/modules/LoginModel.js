@@ -18,14 +18,13 @@ class Login {
   async register() {
     this.valida();
     if (this.errors.length > 0) return 
-
+    
     try{
       this.user = await LoginModel.create(this.body)
     }catch(e){
       console.log(e)
     }
-    this.user = await LoginModel.create(this.body)
-  }
+   }
 
   valida() {
     this.cleanUp();

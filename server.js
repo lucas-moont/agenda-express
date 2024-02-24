@@ -50,6 +50,7 @@ app.use(sessionOptions)
 app.use(flash())
 
 //MIDDLEWARES
+app.use(globalMiddleware)
 app.use(csurf())
 app.use(checkCsrfError)
 app.use(csrfToken);
