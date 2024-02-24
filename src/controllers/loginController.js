@@ -6,8 +6,8 @@ exports.index = (req, res, next) => {
   });
 };
 
-exports.register = (req, res, next) => {
+exports.register = async (req, res, next) => {
   const login = new Login(req.body);
-  login.register();
+  await login.register();
   res.send(login.errors);
 };
