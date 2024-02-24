@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
 
 const LoginSchema = new mongoose.Schema({
   email: { type: String, required: true },
-  password: { type: String, require: true }
+  password: { type: String, require: true },
 });
 
 const LoginModel = mongoose.model("Login", LoginSchema);
@@ -17,15 +18,20 @@ class Login {
 
   async register() {
     this.valida();
-    if (this.errors.length > 0) return 
-    
-    try{
+    if (this.errors.length > 0) return;
+
+    await this.userExists()
+
+    const salt = bcrypt.genSaltSync();
+    this.body.password = bcrypt.hashSync(this.body.password, salt)
+
+    try {
       this.user = await LoginModel.create(this.body)
-      console.log('Usuário criado com sucesso:', this.user);
-    }catch(e){
-      console.log(e)
+      console.log("Usuário criado com sucesso:", this.user)
+    } catch (e) {
+      console.log(e);
     }
-   }
+  }
 
   valida() {
     this.cleanUp();
@@ -35,18 +41,18 @@ class Login {
     }
 
     //valida senha
-    if(this.body.password.length < 3 || this.body.password.length > 20){
-      this.errors.push('Senha inválida.')
+    if (this.body.password.length < 3 || this.body.password.length > 20) {
+      this.errors.push("Senha inválida.");
     }
-    
-  if(!this.body.email || !this.body.password){
-      this.errors.push('Email e senha são necessários.')
+
+    if (!this.body.email || !this.body.password) {
+      this.errors.push("Email e senha são necessários.");
     }
   }
 
   cleanUp() {
     for (let key in this.body) {
-      if (typeof this.body[key] !== 'string') {
+      if (typeof this.body[key] !== "string") {
         this.body[key] = "";
       }
     }
