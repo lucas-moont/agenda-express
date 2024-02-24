@@ -3,7 +3,7 @@ const validator = require("validator");
 
 const LoginSchema = new mongoose.Schema({
   email: { type: String, required: true },
-  password: { type: String, require: true },
+  password: { type: String, require: true }
 });
 
 const LoginModel = mongoose.model("Login", LoginSchema);
@@ -21,6 +21,7 @@ class Login {
     
     try{
       this.user = await LoginModel.create(this.body)
+      console.log('Usuário criado com sucesso:', this.user);
     }catch(e){
       console.log(e)
     }
@@ -34,8 +35,12 @@ class Login {
     }
 
     //valida senha
-    if(this.body.password < 3 || this.body.password > 20){
+    if(this.body.password.length < 3 || this.body.password.length > 20){
       this.errors.push('Senha inválida.')
+    }
+    
+  if(!this.body.email || !this.body.password){
+      this.errors.push('Email e senha são necessários.')
     }
   }
 
