@@ -6,12 +6,18 @@
             <a class="nav-link active" aria-current="page" href="/">Agenda</a>
           </li>
         </ul>
+        <% if(!user) {%>
         <span class="navbar-text">
-          <a href="/login">Entrar</a>
+          <a href="/login/">Entrar</a>
+        </span>
+        <% }else { %>
+        <span class="navbar-text" style="margin-right: 16px">
+          <a href="/cadastrar-contato/">Cadastrar contato</a>
         </span>
         <span class="navbar-text">
-          <a href="/login">Entrar</a>
+          <a href="/login/logout">Sair</a>
         </span>
+        <% } %>
       </div>
     </div>
   </nav>

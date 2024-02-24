@@ -1,9 +1,15 @@
 let Login = require("../modules/LoginModel");
 
 exports.index = (req, res, next) => {
-  res.render("login", {
-    titulo: "Área de login",
-  });
+  if (req.session.user){
+    res.render('index', {
+      titulo: "Agenda"
+    })
+  }else{
+    res.render("login", {
+      titulo: "Área de login",
+    });
+  }
 };
 
 exports.register = async (req, res, next) => {
@@ -51,3 +57,8 @@ exports.login = async (req, res, next) => {
     console.log(e)
   }
 };
+
+exports.logout = (req, res) => {
+  req.session.destroy()
+  res.redirect('/login')
+}
