@@ -4,3 +4,9 @@
     border: 1px solid #FF0000;
     border-radius: 4px;
 }
+
+.alert-success{
+    background-color: #90EE90;
+    border: 1px solid #008000;
+
+}

@@ -20,17 +20,14 @@ class Login {
     this.valida();
     if (this.errors.length > 0) return;
 
-    await this.userExists()
+    await this.userExists();
+
+    if (this.errors.length > 0) return;
 
     const salt = bcrypt.genSaltSync();
-    this.body.password = bcrypt.hashSync(this.body.password, salt)
+    this.body.password = bcrypt.hashSync(this.body.password, salt);
 
-    try {
-      this.user = await LoginModel.create(this.body)
-      console.log("Usuário criado com sucesso:", this.user)
-    } catch (e) {
-      console.log(e);
-    }
+    this.user = await LoginModel.create(this.body);
   }
 
   valida() {
@@ -48,6 +45,11 @@ class Login {
     if (!this.body.email || !this.body.password) {
       this.errors.push("Email e senha são necessários.");
     }
+  }
+
+  async userExists() {
+    const user = await LoginModel.findOne({ email: this.body.email });
+    if (user) this.errors.push("Usuário já existe.");
   }
 
   cleanUp() {
