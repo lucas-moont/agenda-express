@@ -10,3 +10,11 @@ exports.checksForError = (req, res, next) => {
         return res.render('404')
     }
 }
+
+exports.loginRequired = (req, res, next) => {
+    if(!req.session.user){
+        req.session.save(() => res.redirect('/login'))
+    }else{
+        next()
+    }
+}
