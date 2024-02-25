@@ -14,11 +14,14 @@ class Contact {
   constructor(body) {
     this.body = body;
     this.errors = [];
-    this.user = null;
+    this.contact = null;
   }
 
-  register() {
+  async register() {
     this.valida();
+
+    if(this.errors.length > 0) return 
+    this.contact = await ContactModel.create(this.body)
   }
 
   valida() {
