@@ -44,6 +44,12 @@ class Contact {
     }
   }
 
+  static async findId(id){
+    if (typeof id !== 'string') return 
+    const contato = await ContactModel.findById(id)
+    return contato
+  }
+
   cleanUp() {
     for (let key in this.body) {
       if (typeof this.body[key] !== "string") {
