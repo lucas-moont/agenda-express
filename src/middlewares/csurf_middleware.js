@@ -1,6 +1,6 @@
 exports.checkCsrfError = (err, req, res, next) => {
     if(err && err.code === 'EBADCSRFTOKEN'){
-        return res.send('Deu pau')
+        return res.send('Erro na autenticação')
     }
 
     next()

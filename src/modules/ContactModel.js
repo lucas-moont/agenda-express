@@ -5,16 +5,18 @@ const ContactSchema = new mongoose.Schema({
   nome: { type: String, required: true },
   email: { type: String, required: false, default: "" },
   tel: { type: String, required: false, default: "" },
+  criadoPor: {type: String, required: true},
   criadoEm: { type: Date, default: Date.now },
 });
 
 const ContactModel = mongoose.model("Contact", ContactSchema);
 
 class Contact {
-  constructor(body) {
+  constructor(body, user) {
     this.body = body;
     this.errors = [];
     this.contact = null;
+    this.user = user
   }
 
   async register() {
@@ -25,7 +27,7 @@ class Contact {
   }
 
   valida() {
-    //this.cleanUp();
+    this.cleanUp();
     //valida e-mail
     if (this.body.email && !validator.isEmail(this.body.email)) {
       this.errors.push("E-mail inválido");
@@ -53,6 +55,7 @@ class Contact {
       nome: this.body.nome,
       email: this.body.email,
       tel: this.body.tel,
+      criadoPor: this.user
     };
   }
 }
