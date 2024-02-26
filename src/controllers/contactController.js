@@ -64,7 +64,7 @@ exports.editContact = async (req, res, next) => {
     if (contact.errors.length > 0) {
       req.flash("errors", contact.errors);
       req.session.save(() => {
-        return res.redirect("/contato");
+        return res.redirect(`/contato/${req.params.id}`);
       });
       return;
     } else {
