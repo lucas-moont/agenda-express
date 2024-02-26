@@ -48,5 +48,37 @@ exports.editIndex = async (req, res, next) => {
 };
 
 exports.editContact = async (req, res, next) => {
-  if (!req.params.id) return res.render("404");
+  if (!req.params.id) return res.render("404", {
+    titulo: 'Não existe ID'
+  });
+
+  try{
+    const contact = await new Contact(
+      req.body,
+      res.locals.user.email
+    )
+
+    if(!contact) return
+
+    await contact.edit(req.params.id)
+    if (contact.errors.length > 0) {
+      req.flash("errors", contact.errors);
+      req.session.save(() => {
+        return res.redirect("/contato");
+      });
+      return;
+    } else {
+      req.flash("sucess", "Contato editado com sucesso");
+      req.session.save(() => {
+        return res.redirect(`/contato/${req.params.id}`);
+      });
+      return;
+    }
+
+  }catch(e){
+    res.render('404', {
+      titulo: "Erro na edição"
+    })
+  }
+
 }
