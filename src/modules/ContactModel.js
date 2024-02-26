@@ -33,6 +33,10 @@ class Contact {
       this.errors.push("E-mail inválido");
     }
 
+    if(this.body.tel && !validator.isMobilePhone(this.body.tel, 'pt-BR')){
+        this.errors.push('Telephone inválido.')
+    }
+
     //valida nome
     if (this.body.nome.length < 3) {
       this.errors.push("Nome é um campo obrigatório.");
@@ -42,12 +46,6 @@ class Contact {
     if (!this.body.email && !this.body.tel) {
       this.errors.push("Pelo menos um contato precisa ser enviado");
     }
-  }
-
-  static async findId(id){
-    if (typeof id !== 'string') return 
-    const contato = await ContactModel.findById(id)
-    return contato
   }
 
   cleanUp() {
@@ -63,6 +61,20 @@ class Contact {
       tel: this.body.tel,
       criadoPor: this.user
     };
+  }
+
+  static async findId(id){
+    if (typeof id !== 'string') return 
+    const contato = await ContactModel.findById(id)
+    return contato
+  }
+
+  static async buscaContatos() {
+    const contatos = await ContactModel.find().sort({criadosEm: -1})
+                    //find() retorna todos os items da tabrla
+                            //sort organiza eles seguindo a ordem estabelecida, nesse caso a partir do "criados em"
+                            //em sort o valor -1 indica que será feito em ordem decrescente
+    return contatos
   }
 }
 

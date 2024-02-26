@@ -7,12 +7,16 @@
       <p class="text-center lead">Seus contatos</p>
       <div class="responsive-table">
         <table class="table my-3">
+          <% contatos.forEach( contato => { %>
           <tr>
-            <td>Bruce</td>
-            <td>Barbara</td>
-            <td>Selina</td>
-            <td>Natasha</td>
+            <td><%= contato.nome %></td>
+            <td><%= contato.tel %></td>
+            <td><%= contato.email %></td>
+            <td>
+              <a href="#">Editar</a>
+            </td>
           </tr>
+          <% }) %>
         </table>
       </div>
     </div>
