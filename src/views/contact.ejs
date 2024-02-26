@@ -10,7 +10,11 @@
         <div class="col-lg">
           <h4>Faça seu cadastro</h4>
           <p>Se não tiver conta, crie aqui o seu cadastro.</p>
-          <form action="/contato/register" method="POST">
+          <% if(!contato._id) { %>
+            <form action="/contato/register" method="POST">
+          <% } else{ %>
+            <form action="/contato/edit/<%=contato._id%>" method="POST">
+          <% } %>
             <div class="form-group text-start my-3">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <label for="name">Nome</label>
