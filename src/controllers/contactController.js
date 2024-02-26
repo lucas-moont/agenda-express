@@ -46,3 +46,7 @@ exports.editIndex = async (req, res, next) => {
     res.send(e)
   }
 };
+
+exports.editContact = async (req, res, next) => {
+  if (!req.params.id) return res.render("404");
+}

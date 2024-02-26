@@ -26,6 +26,14 @@ class Contact {
     this.contact = await ContactModel.create(this.body)
   }
 
+  async edit(id){
+    if (typeof id !== 'string') return
+
+    this.valida();
+    if(this.errors.length > 0) return
+    this.contato = await ContactModel.findByIdAndUpdate(id, this.body, {new: true})
+  }
+
   valida() {
     this.cleanUp();
     //valida e-mail
