@@ -82,3 +82,31 @@ exports.editContact = async (req, res, next) => {
   }
 
 }
+
+exports.deleteContact = async (req, res, next) => {
+  if (!req.params.id) {
+    req.flash("errors", 'Não existe usuário com esse id');
+    req.session.save(() => {
+      return res.redirect(`/`);
+    });
+  }else {
+    try{
+      const contact = await Contact.delete(req.params.id)
+      if(!contact){
+        req.flash("errors", 'Não existe contato');
+        req.session.save(() => {
+          return res.redirect(`/`);
+        });
+      }else{
+        req.flash('sucess', 'Contato apagado com sucesso.')
+        req.session.save(() => {
+          return res.redirect(`/`);
+        });
+      }
+    }catch(e){
+      res.render('404', {
+        titulo: "Erro na edição"
+      })
+    }
+  }
+}

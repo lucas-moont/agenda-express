@@ -79,10 +79,16 @@ class Contact {
 
   static async buscaContatos() {
     const contatos = await ContactModel.find().sort({criadoEm: -1})
-                    //find() retorna todos os items da tabrla
+                    //find() retorna todos os items da tabela
                             //sort organiza eles seguindo a ordem estabelecida, nesse caso a partir do "criados em"
                             //em sort o valor -1 indica que será feito em ordem decrescente
     return contatos
+  }
+
+  static async delete(id){
+    if (typeof id !== 'string') return
+    const contato = await ContactModel.findByIdAndDelete(id)
+    return contato
   }
 }
 

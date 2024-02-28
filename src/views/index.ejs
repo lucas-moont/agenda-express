@@ -4,6 +4,7 @@
     <div class="col-lg-2"></div>
     <div class="col-lg-8 my-3">
       <h1 class="display-1 text-center my-3">Agenda</h1>
+      <%- include('includes/messages') %>
       <p class="text-center lead">Seus contatos</p>
       <div class="responsive-table">
         <table class="table my-3 text-start">
@@ -21,7 +22,7 @@
               <a href="/contato/<%=contato._id%>">Editar</a>
             </td>
             <td>
-              <a href="/contato/delete/<%contato._id%>" style="color: red;">Apagar</a>
+              <a href="/contato/delete/<%=contato._id%>" style="color: red;">Apagar</a>
             </td>
           </tr>
           <% }) %>
@@ -31,5 +32,4 @@
     <div class="col-lg-2"></div>
   </div>
 </div>
-<%- include('includes/messages') %>
 <%- include('includes/footer') %>
