@@ -32,7 +32,7 @@ app.use(express.static(path.resolve(__dirname, "public")));
 
 const sessionOptions = session({
   secret: 'queroComerAquelaBiancaAnchietaSafadaGostosa',
-  store: new MongoStore({ 
+  store: MongoStore.create({ 
     mongooseConnection: mongoose.connection,
     mongoUrl: process.env.CONNECTIONSTRING 
   }),
